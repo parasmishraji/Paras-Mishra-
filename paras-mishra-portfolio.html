@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paras Mishra — AI/ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0F14;
+    --panel: #10161D;
+    --panel-raised: #141C24;
+    --line: rgba(232,235,240,0.09);
+    --line-strong: rgba(232,235,240,0.16);
+    --text: #E8EBF0;
+    --text-muted: #8B96A5;
+    --text-faint: #566073;
+    --signal-green: #3ECF8E;
+    --signal-green-dim: rgba(62,207,142,0.14);
+    --signal-amber: #E8A33D;
+    --signal-amber-dim: rgba(232,163,61,0.14);
+    --signal-red: #E2574C;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  ::selection{ background:var(--signal-green-dim); color:var(--text); }
+
+  :focus-visible{
+    outline:2px solid var(--signal-green);
+    outline-offset:3px;
+  }
+
+  /* ---------- background grid texture ---------- */
+  .grid-texture{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(232,235,240,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,235,240,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,15,20,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:1080px; margin:0 auto;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono); font-size:14px; color:var(--text);
+    text-decoration:none;
+  }
+  .brand .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--signal-green);
+    box-shadow:0 0 0 3px var(--signal-green-dim);
+    flex-shrink:0;
+  }
+  .navlinks{
+    display:flex; gap:28px; list-style:none;
+    font-size:14px; color:var(--text-muted);
+  }
+  .navlinks a{ text-decoration:none; transition:color .15s ease; }
+  .navlinks a:hover{ color:var(--text); }
+  .nav-toggle{
+    display:none; background:none; border:1px solid var(--line-strong);
+    color:var(--text); width:36px; height:36px; cursor:pointer;
+    font-family:var(--font-mono); font-size:16px;
+  }
+
+  @media (max-width:760px){
+    .navlinks{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0;
+      background:var(--panel); border-bottom:1px solid var(--line);
+      max-height:0; overflow:hidden;
+    }
+    .navlinks.open{ max-height:320px; }
+    .navlinks li{ border-top:1px solid var(--line); }
+    .navlinks a{ display:block; padding:16px 32px; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 72px;
+    position:relative;
+  }
+  .status-line{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono); font-size:13px; color:var(--signal-green);
+    margin-bottom:28px;
+  }
+  .status-line .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--signal-green);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(62,207,142,0.5); }
+    50%{ box-shadow:0 0 0 6px rgba(62,207,142,0); }
+  }
+
+  .hero-grid{
+    display:grid; grid-template-columns:1.5fr 1fr; gap:48px; align-items:start;
+  }
+  @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  h1.name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    margin-bottom:20px;
+  }
+  .role-line{
+    font-family:var(--font-mono);
+    color:var(--text-muted);
+    font-size:15px;
+    margin-bottom:24px;
+  }
+  .role-line span{ color:var(--text); }
+
+  .hero-summary{
+    color:var(--text-muted);
+    font-size:16.5px;
+    max-width:56ch;
+    margin-bottom:32px;
+  }
+  .hero-summary strong{ color:var(--text); font-weight:600; }
+
+  .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 20px;
+    font-family:var(--font-body); font-size:14.5px; font-weight:500;
+    text-decoration:none; cursor:pointer;
+    border:1px solid var(--line-strong);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-primary{
+    background:var(--signal-green);
+    color:#08130E;
+    border-color:var(--signal-green);
+    font-weight:600;
+  }
+  .btn-primary:hover{ background:#4fe0a1; }
+  .btn-secondary{ background:transparent; color:var(--text); }
+  .btn-secondary:hover{ border-color:var(--text-muted); }
+
+  /* node graphic */
+  .node-panel{
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:20px;
+    aspect-ratio:1/1;
+  }
+  .node-panel .label{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    margin-bottom:12px;
+    display:flex; justify-content:space-between;
+  }
+  @media (max-width:820px){ .node-panel{ display:none; } }
+
+  /* ---------- metrics strip ---------- */
+  .metrics-strip{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .metrics-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  @media (max-width:700px){ .metrics-grid{ grid-template-columns:repeat(2,1fr); } }
+  .metric{
+    padding:28px 24px;
+    border-right:1px solid var(--line);
+  }
+  .metric:last-child{ border-right:none; }
+  @media (max-width:700px){
+    .metric:nth-child(2n){ border-right:none; }
+    .metric{ border-bottom:1px solid var(--line); }
+  }
+  .metric .value{
+    font-family:var(--font-display); font-weight:600;
+    font-size:30px; color:var(--signal-green);
+    margin-bottom:4px;
+  }
+  .metric .label{
+    font-family:var(--font-mono); font-size:12px; color:var(--text-muted);
+  }
+
+  /* ---------- sections ---------- */
+  section{ padding:88px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:44px;
+    gap:20px;
+  }
+  .section-head h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:28px;
+  }
+  .section-head .index{
+    font-family:var(--font-mono); font-size:13px; color:var(--text-faint);
+  }
+
+  /* about */
+  .about-text{
+    color:var(--text-muted);
+    font-size:17px;
+    max-width:66ch;
+  }
+  .about-text strong{ color:var(--text); font-weight:600; }
+
+  /* skills matrix */
+  .skills-matrix{
+    border:1px solid var(--line);
+  }
+  .skill-row{
+    display:grid; grid-template-columns:160px 1fr;
+    border-top:1px solid var(--line);
+  }
+  .skill-row:first-child{ border-top:none; }
+  @media (max-width:600px){ .skill-row{ grid-template-columns:1fr; } }
+  .skill-row .cat{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint);
+    padding:18px 20px;
+    border-right:1px solid var(--line);
+    display:flex; align-items:center;
+  }
+  @media (max-width:600px){ .skill-row .cat{ border-right:none; border-bottom:1px solid var(--line); } }
+  .skill-tags{
+    display:flex; flex-wrap:wrap; gap:8px;
+    padding:16px 20px;
+    align-content:center;
+  }
+  .tag{
+    font-size:13.5px; color:var(--text);
+    padding:5px 11px;
+    background:var(--panel-raised);
+    border:1px solid var(--line);
+  }
+
+  /* experience timeline */
+  .timeline-item{
+    display:grid; grid-template-columns:150px 1fr;
+    gap:24px;
+    padding:28px 0;
+    border-top:1px solid var(--line);
+  }
+  .timeline-item:first-child{ border-top:none; }
+  @media (max-width:600px){ .timeline-item{ grid-template-columns:1fr; gap:6px; } }
+  .timeline-item .when{
+    font-family:var(--font-mono); font-size:13px; color:var(--text-faint);
+    padding-top:2px;
+  }
+  .timeline-item h3{
+    font-family:var(--font-display); font-weight:600; font-size:18px;
+    margin-bottom:2px;
+  }
+  .timeline-item .org{
+    font-size:14px; color:var(--text-muted); margin-bottom:12px;
+  }
+  .timeline-item ul{
+    list-style:none; color:var(--text-muted); font-size:15px;
+  }
+  .timeline-item li{
+    position:relative; padding-left:16px; margin-bottom:6px;
+  }
+  .timeline-item li::before{
+    content:'—'; position:absolute; left:0; color:var(--text-faint);
+  }
+
+  /* projects */
+  .project{
+    border:1px solid var(--line);
+    background:var(--panel);
+    margin-bottom:24px;
+  }
+  .project-head{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:16px;
+    padding:24px 28px;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .project-head h3{
+    font-family:var(--font-display); font-weight:600; font-size:20px;
+    margin-bottom:6px;
+  }
+  .project-head .sub{ color:var(--text-muted); font-size:14.5px; }
+  .project-link{
+    font-family:var(--font-mono); font-size:12.5px;
+    color:var(--signal-green);
+    text-decoration:none;
+    border:1px solid var(--line-strong);
+    padding:8px 14px;
+    white-space:nowrap;
+  }
+  .project-link:hover{ border-color:var(--signal-green); }
+
+  .project-body{
+    display:grid; grid-template-columns:1fr 1fr;
+  }
+  @media (max-width:760px){ .project-body{ grid-template-columns:1fr; } }
+
+  .project-stats{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    border-right:1px solid var(--line);
+  }
+  @media (max-width:760px){ .project-stats{ border-right:none; border-bottom:1px solid var(--line); } }
+  .pstat{
+    padding:20px 16px;
+    border-right:1px solid var(--line);
+  }
+  .pstat:last-child{ border-right:none; }
+  .pstat .val{
+    font-family:var(--font-display); font-weight:600; font-size:22px;
+    color:var(--text);
+  }
+  .pstat .lbl{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    margin-top:4px;
+  }
+
+  .project-notes{
+    padding:20px 24px;
+    list-style:none;
+    color:var(--text-muted);
+    font-size:14.5px;
+  }
+  .project-notes li{
+    position:relative; padding-left:16px; margin-bottom:9px;
+  }
+  .project-notes li::before{
+    content:'—'; position:absolute; left:0; color:var(--text-faint);
+  }
+
+  .project-tech{
+    padding:16px 28px;
+    border-top:1px solid var(--line);
+    display:flex; flex-wrap:wrap; gap:8px;
+  }
+
+  /* certifications */
+  .cert-list{ border:1px solid var(--line); }
+  .cert-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:16px 22px;
+    border-top:1px solid var(--line);
+    gap:16px; flex-wrap:wrap;
+  }
+  .cert-row:first-child{ border-top:none; }
+  .cert-row .name{ font-size:15px; color:var(--text); }
+  .cert-row .issuer{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-faint); }
+  .cert-row .when{ font-family:var(--font-mono); font-size:12.5px; color:var(--text-muted); white-space:nowrap; }
+
+  /* education */
+  .edu-grid{ display:grid; gap:20px; }
+  .edu-item{
+    display:grid; grid-template-columns:150px 1fr;
+    gap:24px;
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .edu-item:first-child{ border-top:none; }
+  @media (max-width:600px){ .edu-item{ grid-template-columns:1fr; gap:6px; } }
+  .edu-item .when{ font-family:var(--font-mono); font-size:13px; color:var(--text-faint); }
+  .edu-item h3{ font-family:var(--font-display); font-weight:600; font-size:17px; margin-bottom:2px; }
+  .edu-item .org{ color:var(--text-muted); font-size:14.5px; }
+
+  /* extra */
+  .extra-list{ columns:2; column-gap:40px; color:var(--text-muted); font-size:15px; list-style:none; }
+  @media (max-width:700px){ .extra-list{ columns:1; } }
+  .extra-list li{ position:relative; padding-left:16px; margin-bottom:12px; break-inside:avoid; }
+  .extra-list li::before{ content:'—'; position:absolute; left:0; color:var(--text-faint); }
+
+  /* footer / contact */
+  footer{ padding:80px 0 60px; }
+  .contact-panel{
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:48px;
+    text-align:left;
+  }
+  @media (max-width:600px){ .contact-panel{ padding:32px 24px; } }
+  .contact-panel h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:30px; margin-bottom:14px;
+  }
+  .contact-panel p{ color:var(--text-muted); max-width:52ch; margin-bottom:28px; }
+  .contact-links{ display:flex; flex-wrap:wrap; gap:12px; }
+  .contact-links a{
+    font-family:var(--font-mono); font-size:13.5px;
+    padding:12px 18px;
+    border:1px solid var(--line-strong);
+    text-decoration:none;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{ border-color:var(--signal-green); color:var(--signal-green); }
+  .foot-note{
+    margin-top:40px; text-align:center;
+    font-family:var(--font-mono); font-size:12px; color:var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-texture"></div>
+
+<header>
+  <nav>
+    <a href="#top" class="brand"><span class="dot"></span>paras.mishra</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">≡</button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="wrap">
+    <section class="hero" style="border-bottom:none; padding-bottom:0;">
+      <div class="status-line"><span class="dot"></span>OPEN TO INTERNSHIPS · AI/ML · SOFTWARE · DATA SCIENCE</div>
+      <div class="hero-grid">
+        <div>
+          <h1 class="name">Paras Mishra</h1>
+          <div class="role-line">B.Tech CSE @ <span>Lovely Professional University</span> · Class of 2028</div>
+          <p class="hero-summary">
+            I build <strong>AI systems that run in production</strong> — semantic search over IT tickets that resolves in under 500ms, and real-time infrastructure monitoring that predicts server failures before they happen. Certified across Google Cloud, IBM, Oracle, Cisco, and Infosys, and currently an open-source ambassador for GSSoC 2026.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View projects</a>
+            <a href="mailto:parasmishraji2@gmail.com" class="btn btn-secondary">Get in touch</a>
+          </div>
+        </div>
+        <div class="node-panel" aria-hidden="true">
+          <div class="label"><span>vector_space.faiss</span><span>384-d</span></div>
+          <svg viewBox="0 0 240 240" width="100%" height="88%">
+            <g stroke="rgba(62,207,142,0.35)" stroke-width="1">
+              <line x1="40" y1="50" x2="120" y2="90"/>
+              <line x1="120" y1="90" x2="190" y2="40"/>
+              <line x1="120" y1="90" x2="70" y2="150"/>
+              <line x1="120" y1="90" x2="180" y2="150"/>
+              <line x1="70" y1="150" x2="40" y2="200"/>
+              <line x1="180" y1="150" x2="200" y2="205"/>
+              <line x1="70" y1="150" x2="180" y2="150"/>
+              <line x1="40" y1="50" x2="190" y2="40"/>
+            </g>
+            <g>
+              <circle cx="40" cy="50" r="4" fill="#3ECF8E" opacity="0.6"/>
+              <circle cx="190" cy="40" r="4" fill="#3ECF8E" opacity="0.5"/>
+              <circle cx="120" cy="90" r="6" fill="#3ECF8E"/>
+              <circle cx="70" cy="150" r="4" fill="#E8A33D" opacity="0.7"/>
+              <circle cx="180" cy="150" r="4" fill="#3ECF8E" opacity="0.6"/>
+              <circle cx="40" cy="200" r="3.5" fill="#8B96A5" opacity="0.5"/>
+              <circle cx="200" cy="205" r="3.5" fill="#8B96A5" opacity="0.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- METRICS STRIP -->
+  <div class="metrics-strip">
+    <div class="wrap">
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="value">&lt;500ms</div>
+          <div class="label">TICKET RESOLUTION LATENCY</div>
+        </div>
+        <div class="metric">
+          <div class="value">20 / 4</div>
+          <div class="label">SERVERS MONITORED / DATA CENTERS</div>
+        </div>
+        <div class="metric">
+          <div class="value">5</div>
+          <div class="label">INDUSTRY CERTIFICATIONS</div>
+        </div>
+        <div class="metric">
+          <div class="value">100K+</div>
+          <div class="label">HACKATHON NETWORK REACHED</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-head">
+        <h2>About</h2>
+        <span class="index">01</span>
+      </div>
+      <p class="about-text">
+        I'm a Computer Science student at LPU with a focus on <strong>applied AI/ML and full-stack systems</strong>. Most of my work sits at the intersection of the two: taking a model — whether it's a sentence transformer for semantic search or an XGBoost classifier for failure prediction — and wrapping it in a real API, a real interface, and real deployment infrastructure. Outside of coursework, I contribute to open source through GSSoC 2026, represent AI and hackathon communities as a campus ambassador, and write about AI/ML to a growing LinkedIn audience.
+      </p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <span class="index">02</span>
+      </div>
+
+      <div class="timeline-item">
+        <div class="when">May 2026 — Present</div>
+        <div>
+          <h3>Open Source Ambassador &amp; Contributor</h3>
+          <div class="org">GirlScript Summer of Code (GSSoC 2026) · Remote</div>
+          <ul>
+            <li>Contributing to the AI/Agents and Open Source tracks of India's largest OSS program, with 30,000+ participants.</li>
+            <li>Resolved bugs and improved documentation across 2 AI-focused repositories through pull requests and code review.</li>
+            <li>Promoting open-source culture as ambassador — onboarding new contributors and expanding program reach.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="when">Jun 2026 — Present</div>
+        <div>
+          <h3>INDIA RUNS Ambassador</h3>
+          <div class="org">Hack2Skill · Remote, India</div>
+          <ul>
+            <li>Selected as ambassador for one of India's largest AI &amp; product strategy hackathons, with 100,000+ participants nationally.</li>
+            <li>Driving AI literacy and hackathon participation across the LPU campus through outreach and content.</li>
+            <li>Connecting students with national-level competitions and skill-building opportunities.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="when">Jun 2026 — Present</div>
+        <div>
+          <h3>Campus Ambassador</h3>
+          <div class="org">CountryEdu Private Limited · Remote</div>
+          <ul>
+            <li>Representing CountryEdu at LPU, promoting internship and career development opportunities among students.</li>
+            <li>Building student engagement through outreach, networking, and branding initiatives.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <span class="index">03</span>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <h3>AutoTicket</h3>
+            <div class="sub">AI-powered IT ticket auto-resolution system · 2025 – 2026</div>
+          </div>
+          <a class="project-link" href="https://github.com/parasmishraji/both-project" target="_blank" rel="noopener">github.com/parasmishraji/both-project</a>
+        </div>
+        <div class="project-body">
+          <div class="project-stats">
+            <div class="pstat"><div class="val">&lt;500ms</div><div class="lbl">CLASSIFY + RECOMMEND</div></div>
+            <div class="pstat"><div class="val">384-d</div><div class="lbl">EMBEDDING SPACE</div></div>
+            <div class="pstat"><div class="val">OCR</div><div class="lbl">SCREENSHOT INGEST</div></div>
+          </div>
+          <ul class="project-notes">
+            <li>End-to-end system that classifies IT support tickets and recommends resolutions, eliminating manual triage.</li>
+            <li>Semantic vector search over Sentence Transformer embeddings using FAISS — handles typos, slang, and abbreviations without extra rules.</li>
+            <li>Multimodal OCR pipeline (Tesseract) extracts error text from uploaded screenshots to enrich the query.</li>
+            <li>Deployed on Render (backend) and Vercel (frontend), with environment-based config and CI/CD.</li>
+          </ul>
+        </div>
+        <div class="project-tech">
+          <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Sentence Transformers</span><span class="tag">FAISS</span><span class="tag">Tesseract OCR</span><span class="tag">React 19</span><span class="tag">Vite</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <h3>Server Failure Predictor</h3>
+            <div class="sub">Real-time ML infrastructure monitoring · 2025 – 2026</div>
+          </div>
+          <a class="project-link" href="https://github.com/parasmishraji/both-project" target="_blank" rel="noopener">github.com/parasmishraji/both-project</a>
+        </div>
+        <div class="project-body">
+          <div class="project-stats">
+            <div class="pstat"><div class="val">2s</div><div class="lbl">WEBSOCKET REFRESH</div></div>
+            <div class="pstat"><div class="val">&lt;100ms</div><div class="lbl">FULL INFERENCE PASS</div></div>
+            <div class="pstat"><div class="val">3-tier</div><div class="lbl">HEALTHY / WARNING / CRITICAL</div></div>
+          </div>
+          <ul class="project-notes">
+            <li>Predicts failures across 20 servers spanning 4 global data centers, streamed live over WebSockets.</li>
+            <li>XGBoost model trained on 10,000 synthetic samples with 25% intentional missing values — native NaN handling, no imputation step.</li>
+            <li>Three-tier classification with probabilistic failure scores enables graduated responses, including auto-migrate.</li>
+            <li>Full pipeline — data generation, prediction, WebSocket push — completes in under 100ms for all 20 servers at once.</li>
+          </ul>
+        </div>
+        <div class="project-tech">
+          <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">XGBoost</span><span class="tag">WebSockets</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">React 19</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <div>
+            <h3>Car Rental Website</h3>
+            <div class="sub">Full-stack booking platform · Oct 2024 – Nov 2024</div>
+          </div>
+          <a class="project-link" href="https://github.com/parasmishraji/Car-rental-website" target="_blank" rel="noopener">github.com/parasmishraji/Car-rental-website</a>
+        </div>
+        <div class="project-body">
+          <ul class="project-notes" style="grid-column:1/-1; padding:24px 28px;">
+            <li>Responsive full-stack platform for car rentals, with booking management, vehicle availability scheduling, and customer data storage.</li>
+            <li>Frontend built with HTML/CSS/JS; backend booking logic in Node.js with relational and NoSQL database integration.</li>
+          </ul>
+        </div>
+        <div class="project-tech">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Node.js</span><span class="tag">MySQL</span><span class="tag">MongoDB</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-head">
+        <h2>Skills</h2>
+        <span class="index">04</span>
+      </div>
+      <div class="skills-matrix">
+        <div class="skill-row">
+          <div class="cat">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">C++</span><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="cat">AI / ML</div>
+          <div class="skill-tags">
+            <span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Sentence Transformers</span><span class="tag">FAISS</span><span class="tag">Prompt Engineering</span><span class="tag">Vertex AI</span><span class="tag">Generative AI</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="cat">Web Dev</div>
+          <div class="skill-tags">
+            <span class="tag">React 19</span><span class="tag">FastAPI</span><span class="tag">Node.js</span><span class="tag">Vite</span><span class="tag">REST APIs</span><span class="tag">WebSockets</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="cat">Databases</div>
+          <div class="skill-tags">
+            <span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Oracle Database</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="cat">Tools &amp; OS</div>
+          <div class="skill-tags">
+            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">PyCharm</span><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">macOS</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="cat">Soft Skills</div>
+          <div class="skill-tags">
+            <span class="tag">Team Leadership</span><span class="tag">Problem Solving</span><span class="tag">Community Building</span><span class="tag">Adaptability</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications">
+      <div class="section-head">
+        <h2>Certifications</h2>
+        <span class="index">05</span>
+      </div>
+      <div class="cert-list">
+        <div class="cert-row">
+          <div><span class="name">Prompt Design in Vertex AI</span><br><span class="issuer">Google Cloud Skills Boost</span></div>
+          <div class="when">Sep 2025</div>
+        </div>
+        <div class="cert-row">
+          <div><span class="name">Artificial Intelligence Fundamentals</span><br><span class="issuer">IBM SkillsBuild</span></div>
+          <div class="when">Feb 2026</div>
+        </div>
+        <div class="cert-row">
+          <div><span class="name">Oracle Data Platform 2025 — Foundations</span><br><span class="issuer">Oracle University</span></div>
+          <div class="when">May 2026</div>
+        </div>
+        <div class="cert-row">
+          <div><span class="name">Python Essentials 1</span><br><span class="issuer">Cisco Networking Academy</span></div>
+          <div class="when">May 2026</div>
+        </div>
+        <div class="cert-row">
+          <div><span class="name">Programming Using C++</span><br><span class="issuer">Infosys Springboard</span></div>
+          <div class="when">2025</div>
+        </div>
+        <div class="cert-row">
+          <div><span class="name">GfG 160 — 160 Days of Problem Solving</span><br><span class="issuer">GeeksforGeeks</span></div>
+          <div class="when">May 2025</div>
+        </div>
+        <div class="cert-row">
+          <div><span class="name">Linux Technical MOOC</span><br><span class="issuer">Skilled</span></div>
+          <div class="when">Nov 2024</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="section-head">
+        <h2>Education</h2>
+        <span class="index">06</span>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-item">
+          <div class="when">Aug 2024 — Present</div>
+          <div>
+            <h3>B.Tech, Computer Science &amp; Engineering</h3>
+            <div class="org">Lovely Professional University, Punjab, India · CGPA 6.53</div>
+            <div class="org" style="margin-top:4px;">Coursework: Data Structures, Algorithms, DBMS, Operating Systems, Computer Networks, Machine Learning</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="when">Apr 2023 — Mar 2024</div>
+          <div>
+            <h3>12th, Science</h3>
+            <div class="org">Baba International School, Uttar Pradesh · 62.3%</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="when">Apr 2021 — Mar 2022</div>
+          <div>
+            <h3>10th, Secondary School</h3>
+            <div class="org">Baba International School, Uttar Pradesh · 82%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXTRA-CURRICULAR -->
+    <section id="extra">
+      <div class="section-head">
+        <h2>Beyond the code</h2>
+        <span class="index">07</span>
+      </div>
+      <ul class="extra-list">
+        <li>500+ LinkedIn followers with 1,137 peak post impressions as a consistent AI/ML content creator.</li>
+        <li>GSSoC 2026 Open Source Ambassador, promoting open-source culture across the LPU campus.</li>
+        <li>INDIA RUNS Ambassador for Hack2Skill, India's largest AI hackathon with 100,000+ participants.</li>
+        <li>CountryEdu Campus Ambassador, connecting LPU students with internship and career opportunities.</li>
+        <li>Head Coordinator / Team Leader for major campus events with 20,000+ audience engagement.</li>
+        <li>Competed in Elocution, Debate, Poetry, and Mushaira competitions at LPU.</li>
+        <li>Competitive swimmer, with a Public Speaking certification from Samvad 2.0.</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- CONTACT -->
+  <div class="wrap">
+    <footer id="contact">
+      <div class="contact-panel">
+        <h2>Let's build something.</h2>
+        <p>Looking for internship opportunities in AI/ML, software development, or data science. Reach out directly, or find the code behind the projects above on GitHub.</p>
+        <div class="contact-links">
+          <a href="mailto:parasmishraji2@gmail.com">parasmishraji2@gmail.com</a>
+          <a href="tel:+916395368755">+91 63953 68755</a>
+          <a href="https://linkedin.com/in/paras-mishra-4363a9183" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/parasmishraji" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <div class="foot-note">© 2026 Paras Mishra — built with a systems-monitoring aesthetic, on brand for the work.</div>
+    </footer>
+  </div>
+
+</main>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+
+</body>
+</html>
